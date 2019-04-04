@@ -158,7 +158,7 @@ class Page  {
                 echo '<td>' . $movie->title . '</td>';
                 echo '<td>' . $movie->overview . '</td>';
                 echo '<td>' . $movie->release_date . '</td>';
-                echo '<td><a href="Review.php?movie='.$movie->title.'">Add Review</a></td>';
+                echo '<td><a href="Review.php?movie='.$movie->id.'">Add Review</a></td>';
                 echo '</tr>';
             }
             ?>
@@ -174,7 +174,7 @@ class Page  {
             $rating = 0;
                
                 echo '<img src="' .TheMovieDbApi::getW500Image($movie->poster_path) . '" alt="The Movie DB" height="300" width="300"/>';
-                echo '<p>Rating: '.$rating.'/5';
+                echo '<p>Rating: '.$movie->vote_average.'/10';
                 echo  '<p>Description:</p>
                 <p>'. $movie->overview . '</p>';
                 echo '<p>' . $movie->release_date . '</p>';
@@ -194,7 +194,7 @@ class Page  {
                     </tr>
                     <tr>
                     <td><TextArea name="reviewdesc">'.$Review->getReviewDesc().'</TextArea></td>
-                    <td><input name="rating" type="number" max=5 min=0 value = '.$Review->getRating().'></td>
+                    <td><input name="rating" type="number" max=10 min=0 value = '.$Review->getRating().'></td>
                     </tr>
                     <tr>
                     <td><input type="submit" value="Update"></td>

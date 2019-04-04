@@ -23,11 +23,13 @@ session_start();
 
 if(!LoginManager::verifyLogin()) return;
 
-
-$movies = TheMovieDbApi::getMoviesBetweenYears(2017, 2018);
-if(!empty($_GET['movie'])) {
-    $movies = TheMovieDbApi::searchMovies($movies, $_GET['movie']);
+$movieId = $_GET['movie'];
+if(!is_numeric($movieId)) {
+    header('Location: home');
+    return;
 }
+$movie = TheMovieDbApi::getMovieById((int)$movieId);
+
 MovieMapper::inizialize("Movie");
 ReviewMapper::inizialize("Review");
 if(!empty($_POST)){
@@ -40,13 +42,13 @@ if(!empty($_POST)){
         //ReviewMapper::updateReview($newreview);
 }
 
-$_SESSION["MOVIE"] = $movies[0];
+$_SESSION["MOVIE"] = $movie;
 Page::$title = $_SESSION["MOVIE"]->title;
 Page::header();
 
 Page::ShowMovie($_SESSION["MOVIE"]);
 $Review = new Review();
-$Review->setRating(0);
+$Review->setRating($movie->vote_average);
 $Review->setReviewDesc("");
 Page::ShowUserReview($Review,$_SESSION["MOVIE"]);
 $Reviews = null;

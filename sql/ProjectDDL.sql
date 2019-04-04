@@ -1,4 +1,4 @@
-Drop DATABASE IF EXISTS GroupProject 
+Drop DATABASE IF EXISTS GroupProject; 
 
 Create Database GroupProject;
 
